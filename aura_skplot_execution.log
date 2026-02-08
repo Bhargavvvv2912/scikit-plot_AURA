@@ -1,0 +1,1324 @@
+
+::group::Analyzing Codebase for Update Risk
+Usage scores calculated.
+::endgroup::
+INFO: Found pinned requirements. Running initial health check and regenerating lockfile...
+
+::group::Initial Baseline Health Check
+--> Bootstrap Step 1: Installing dependencies from 'requirements.txt'...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/initial_check_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/requirements.txt' in CWD: '.'
+
+--> Bootstrap Step 2: Installing project from current directory ('.') in editable mode...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/initial_check_venv/bin/python -m pip install --no-build-isolation -e .' in CWD: '.'
+
+--> Bootstrap Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/initial_check_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+Smoke test PASSED.
+::endgroup::
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/initial_check_venv/bin/python -m pip freeze' in CWD: '.'
+Initial baseline is valid and stable. Overwriting requirements file with clean, frozen state.
+::endgroup::
+INFO: Dependency graph metrics not found. Entanglement scores will be 0.
+
+::group::UPDATE PASS 1/3
+
+Prioritized Update Plan for this Pass (Highest Risk First):
+Rank  | Package                        | % of Total Risk    | Change
+----- | ------------------------------ | ------------------ | --------------------
+1     | numpy                          | 38.46             % | 1.24.3 -> 2.4.2
+2     | scipy                          | 19.23             % | 1.10.1 -> 1.17.0
+3     | matplotlib                     | 19.23             % | 3.7.1 -> 3.10.8
+4     | scikit-learn                   | 19.23             % | 1.2.2 -> 1.8.0
+5     | contourpy                      | 3.85              % | 1.3.2 -> 1.3.3
+
+--------------------------------------------------------------------------------
+PULSE: [PASS 1 | ATTEMPT 1/5] Processing 'numpy'
+PULSE: Changed packages this pass so far: set()
+--------------------------------------------------------------------------------
+
+--> Toplevel Attempt: Trying direct update to numpy==2.4.2
+
+::group::Probe: Install & Validate for numpy==2.4.2
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+::endgroup::
+
+--> Toplevel Result: Direct update FAILED. Reason: 'Dependency installation failed: The dependency conflict occurs because the specified versions of `scikit-learn==1.2.2`, `scipy==1.10.1`, `contourpy==1.3.2`, `matplotlib==3.7.1`, and `numpy==2.4.2` have mutually incompatible dependencies when installed together.'
+    Suspected Blockers (Regex): ['scikit-learn', 'scipy', 'contourpy', 'numpy', 'matplotlib']
+--> Action: Entering Level 1 Healing with 'Filter-Then-Scan' strategy.
+
+::group::Healing 'numpy': Filter-Then-Scan Strategy
+
+--- Phase 1: Filtering for compatible versions ---
+  -> Checking compatibility of numpy==2.4.2...
+     -- Incompatible. Diagnosis: The dependency conflict arises because the specified versions of contourpy==1.3.2, matplotlib==3.7.1, numpy==2.4.2, scikit-learn==1.2.2, and scipy==1.10.1 have conflicting interdependencies.
+  -> Checking compatibility of numpy==2.4.1...
+     -- Incompatible. Diagnosis: The root cause is that the specified versions of contourpy==1.3.2, matplotlib==3.7.1, numpy==2.4.1, scikit-learn==1.2.2, and scipy==1.10.1 have conflicting dependencies with each other.
+  -> Checking compatibility of numpy==2.4.0...
+     -- Incompatible. Diagnosis: The dependency conflict arises because contourpy==1.3.2, matplotlib==3.7.1, numpy==2.4.0, scikit-learn==1.2.2, and scipy==1.10.1 have incompatible requirements with each other.
+  -> Checking compatibility of numpy==2.3.5...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that `contourpy==1.3.2`, `matplotlib==3.7.1`, `numpy==2.3.5`, `scikit-learn==1.2.2`, and `scipy==1.10.1` have incompatible or conflicting dependencies.
+  -> Checking compatibility of numpy==2.3.4...
+     -- Incompatible. Diagnosis: The dependency conflict arises because `contourpy==1.3.2`, `matplotlib==3.7.1`, `numpy==2.3.4`, `scikit-learn==1.2.2`, and `scipy==1.10.1` have incompatible dependency requirements with each other, preventing their simultaneous installation.
+  -> Checking compatibility of numpy==2.3.3...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that `contourpy==1.3.2`, `matplotlib==3.7.1`, `numpy==2.3.3`, `scikit-learn==1.2.2`, and `scipy==1.10.1` have incompatible dependency requirements when installed together.
+  -> Checking compatibility of numpy==2.3.2...
+     -- Incompatible. Diagnosis: The dependency conflict arises because the specified versions of `contourpy==1.3.2`, `matplotlib==3.7.1`, `numpy==2.3.2`, `scikit-learn==1.2.2`, and `scipy==1.10.1` have mutually incompatible dependency requirements.
+  -> Checking compatibility of numpy==2.3.1...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that `contourpy==1.3.2`, `matplotlib==3.7.1`, `numpy==2.3.1`, `scikit-learn==1.2.2`, and `scipy==1.10.1` have conflicting dependencies among themselves, preventing their simultaneous installation.
+  -> Checking compatibility of numpy==2.3.0...
+     -- Incompatible. Diagnosis: The dependency conflict is caused by the specified package versions (contourpy==1.3.2, matplotlib==3.7.1, numpy==2.3.0, scikit-learn==1.2.2, and scipy==1.10.1) having mutually exclusive or incompatible dependency requirements.
+  -> Checking compatibility of numpy==2.2.6...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that the specified versions of contourpy==1.3.2, matplotlib==3.7.1, numpy==2.2.6, scikit-learn==1.2.2, and scipy==1.10.1 have incompatible requirements among themselves.
+  -> Checking compatibility of numpy==2.2.5...
+     -- Incompatible. Diagnosis: The root cause is that the specified package versions of contourpy==1.3.2, matplotlib==3.7.1, numpy==2.2.5, scikit-learn==1.2.2, and scipy==1.10.1 have conflicting dependencies among themselves.
+  -> Checking compatibility of numpy==2.2.4...
+     -- Incompatible. Diagnosis: The dependency conflict is caused by `contourpy==1.3.2`, `matplotlib==3.7.1`, `numpy==2.2.4`, `scikit-learn==1.2.2`, and `scipy==1.10.1` having mutually conflicting dependencies.
+  -> Checking compatibility of numpy==2.2.3...
+     -- Incompatible. Diagnosis: The dependency conflict is caused by the inability to install `contourpy==1.3.2`, `matplotlib==3.7.1`, `numpy==2.2.3`, `scikit-learn==1.2.2`, and `scipy==1.10.1` simultaneously because their respective dependency requirements clash.
+  -> Checking compatibility of numpy==2.2.2...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that `contourpy==1.3.2`, `matplotlib==3.7.1`, `numpy==2.2.2`, `scikit-learn==1.2.2`, and `scipy==1.10.1` cannot be installed simultaneously because these specific package versions have conflicting dependencies.
+  -> Checking compatibility of numpy==2.2.1...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that `contourpy==1.3.2`, `matplotlib==3.7.1`, `numpy==2.2.1`, `scikit-learn==1.2.2`, and `scipy==1.10.1` have conflicting dependencies that prevent their simultaneous installation.
+  -> Checking compatibility of numpy==2.2.0...
+     -- Incompatible. Diagnosis: The dependency conflict arises because the specified versions of contourpy==1.3.2, matplotlib==3.7.1, numpy==2.2.0, scikit-learn==1.2.2, and scipy==1.10.1 have incompatible underlying dependency requirements that prevent them from being installed together.
+  -> Checking compatibility of numpy==2.1.3...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that contourpy==1.3.2, matplotlib==3.7.1, numpy==2.1.3, scikit-learn==1.2.2, and scipy==1.10.1 have incompatible internal dependency requirements that prevent them from being installed simultaneously.
+  -> Checking compatibility of numpy==2.1.2...
+     -- Incompatible. Diagnosis: The dependency conflict arises because `contourpy==1.3.2`, `matplotlib==3.7.1`, `numpy==2.1.2`, `scikit-learn==1.2.2`, and `scipy==1.10.1` have conflicting dependencies that prevent their simultaneous installation.
+  -> Checking compatibility of numpy==2.1.1...
+     -- Incompatible. Diagnosis: The dependency conflict arises because `contourpy==1.3.2`, `matplotlib==3.7.1`, `numpy==2.1.1`, `scikit-learn==1.2.2`, and `scipy==1.10.1` have conflicting dependencies with each other.
+  -> Checking compatibility of numpy==2.1.0...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that the specified package versions—contourpy==1.3.2, matplotlib==3.7.1, numpy==2.1.0, scikit-learn==1.2.2, and scipy==1.10.1—have conflicting requirements with each other.
+  -> Checking compatibility of numpy==2.0.2...
+     -- Incompatible. Diagnosis: The dependency conflict is rooted in the incompatible requirements among the specified versions of contourpy==1.3.2, matplotlib==3.7.1, numpy==2.0.2, scikit-learn==1.2.2, and scipy==1.10.1, preventing their simultaneous installation.
+  -> Checking compatibility of numpy==2.0.1...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that `contourpy==1.3.2`, `matplotlib==3.7.1`, `numpy==2.0.1`, `scikit-learn==1.2.2`, and `scipy==1.10.1` have conflicting dependencies when installed together.
+  -> Checking compatibility of numpy==2.0.0...
+     -- Incompatible. Diagnosis: The dependency conflict arises because the specified versions of contourpy==1.3.2, matplotlib==3.7.1, numpy==2.0.0, scikit-learn==1.2.2, and scipy==1.10.1 have mutually conflicting dependency requirements.
+  -> Checking compatibility of numpy==1.26.4...
+     -- Compatible.
+  -> Checking compatibility of numpy==1.26.3...
+     -- Compatible.
+  -> Checking compatibility of numpy==1.26.2...
+     -- Compatible.
+  -> Checking compatibility of numpy==1.26.1...
+     -- Compatible.
+  -> Checking compatibility of numpy==1.26.0...
+     -- Compatible.
+  -> Checking compatibility of numpy==1.25.2...
+     -- Compatible.
+  -> Checking compatibility of numpy==1.25.1...
+     -- Compatible.
+  -> Checking compatibility of numpy==1.25.0...
+     -- Compatible.
+  -> Checking compatibility of numpy==1.24.4...
+     -- Compatible.
+
+--- Phase 2: Validating compatible versions (newest first) ---
+Found 9 compatible versions to test: ['1.26.4', '1.26.3', '1.26.2', '1.26.1', '1.26.0', '1.25.2', '1.25.1', '1.25.0', '1.24.4']
+
+::group::Probe: Install & Validate for numpy==1.26.4
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+Smoke test PASSED.
+::endgroup::
+--> SUCCESS: Probe passed.
+::endgroup::
+
+SUCCESS: Found latest working version: numpy==1.26.4
+::endgroup::
+--> Healing Result: Level 1 Succeeded. Found new working version: 1.26.4
+  -> SUCCESS. Locking in numpy==1.26.4
+
+--------------------------------------------------------------------------------
+PULSE: [PASS 1 | ATTEMPT 2/5] Processing 'scipy'
+PULSE: Changed packages this pass so far: {'numpy'}
+--------------------------------------------------------------------------------
+
+--> Toplevel Attempt: Trying direct update to scipy==1.17.0
+
+::group::Probe: Install & Validate for scipy==1.17.0
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+--> Toplevel Result: Direct update FAILED. Reason: 'Validation script failed'
+    Suspected Blockers (Regex): ['--']
+--> Action: Entering Level 1 Healing with 'Filter-Then-Scan' strategy.
+
+::group::Healing 'scipy': Filter-Then-Scan Strategy
+
+--- Phase 1: Filtering for compatible versions ---
+  -> Checking compatibility of scipy==1.17.0...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.16.3...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.16.2...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.16.1...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.16.0...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.15.3...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.15.2...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.15.1...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.15.0...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.14.1...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.14.0...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.13.1...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.13.0...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.12.0...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.11.4...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.11.3...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.11.2...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.11.1...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.11.0...
+     -- Compatible.
+
+--- Phase 2: Validating compatible versions (newest first) ---
+Found 19 compatible versions to test: ['1.17.0', '1.16.3', '1.16.2', '1.16.1', '1.16.0', '1.15.3', '1.15.2', '1.15.1', '1.15.0', '1.14.1', '1.14.0', '1.13.1', '1.13.0', '1.12.0', '1.11.4', '1.11.3', '1.11.2', '1.11.1', '1.11.0']
+
+::group::Probe: Install & Validate for scipy==1.17.0
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.16.3
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.16.2
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.16.1
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.16.0
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.15.3
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.15.2
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.15.1
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.15.0
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.14.1
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.14.0
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.13.1
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.13.0
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.12.0
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.11.4
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+Smoke test PASSED.
+::endgroup::
+--> SUCCESS: Probe passed.
+::endgroup::
+
+SUCCESS: Found latest working version: scipy==1.11.4
+::endgroup::
+--> Healing Result: Level 1 Succeeded. Found new working version: 1.11.4
+  -> SUCCESS. Locking in scipy==1.11.4
+
+--------------------------------------------------------------------------------
+PULSE: [PASS 1 | ATTEMPT 3/5] Processing 'matplotlib'
+PULSE: Changed packages this pass so far: {'scipy', 'numpy'}
+--------------------------------------------------------------------------------
+
+--> Toplevel Attempt: Trying direct update to matplotlib==3.10.8
+
+::group::Probe: Install & Validate for matplotlib==3.10.8
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+Smoke test PASSED.
+::endgroup::
+--> SUCCESS: Probe passed.
+::endgroup::
+--> Toplevel Result: Direct update SUCCEEDED.
+  -> SUCCESS. Locking in matplotlib==3.10.8
+
+--------------------------------------------------------------------------------
+PULSE: [PASS 1 | ATTEMPT 4/5] Processing 'scikit-learn'
+PULSE: Changed packages this pass so far: {'scipy', 'numpy', 'matplotlib'}
+--------------------------------------------------------------------------------
+
+--> Toplevel Attempt: Trying direct update to scikit-learn==1.8.0
+
+::group::Probe: Install & Validate for scikit-learn==1.8.0
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+::endgroup::
+
+--> Toplevel Result: Direct update FAILED. Reason: 'Dependency installation failed: The dependency conflict arises because installing `scikit-learn==1.8.0` and `joblib==1.2.0` simultaneously leads to conflicting sub-dependencies.'
+    Suspected Blockers (Regex): ['scikit-learn', 'joblib']
+--> Action: Entering Level 1 Healing with 'Filter-Then-Scan' strategy.
+
+::group::Healing 'scikit-learn': Filter-Then-Scan Strategy
+
+--- Phase 1: Filtering for compatible versions ---
+  -> Checking compatibility of scikit-learn==1.8.0...
+     -- Incompatible. Diagnosis: The dependency conflict is caused by the inability to install `joblib==1.2.0` and `scikit-learn==1.8.0` simultaneously due to incompatible dependencies between these specific package versions.
+  -> Checking compatibility of scikit-learn==1.7.2...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.7.1...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.7.0...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.6.1...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.6.0...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.5.2...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.5.1...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.5.0...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.4.2...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.4.1.post1...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.4.0...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.3.2...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.3.1...
+     -- Compatible.
+  -> Checking compatibility of scikit-learn==1.3.0...
+     -- Compatible.
+
+--- Phase 2: Validating compatible versions (newest first) ---
+Found 14 compatible versions to test: ['1.7.2', '1.7.1', '1.7.0', '1.6.1', '1.6.0', '1.5.2', '1.5.1', '1.5.0', '1.4.2', '1.4.1.post1', '1.4.0', '1.3.2', '1.3.1', '1.3.0']
+
+::group::Probe: Install & Validate for scikit-learn==1.7.2
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+Smoke test PASSED.
+::endgroup::
+--> SUCCESS: Probe passed.
+::endgroup::
+
+SUCCESS: Found latest working version: scikit-learn==1.7.2
+::endgroup::
+--> Healing Result: Level 1 Succeeded. Found new working version: 1.7.2
+  -> SUCCESS. Locking in scikit-learn==1.7.2
+
+--------------------------------------------------------------------------------
+PULSE: [PASS 1 | ATTEMPT 5/5] Processing 'contourpy'
+PULSE: Changed packages this pass so far: {'scipy', 'numpy', 'matplotlib', 'scikit-learn'}
+--------------------------------------------------------------------------------
+
+--> Toplevel Attempt: Trying direct update to contourpy==1.3.3
+
+::group::Probe: Install & Validate for contourpy==1.3.3
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+Smoke test PASSED.
+::endgroup::
+--> SUCCESS: Probe passed.
+::endgroup::
+--> Toplevel Result: Direct update SUCCEEDED.
+  -> SUCCESS. Locking in contourpy==1.3.3
+::endgroup::
+
+Pass complete with changes.
+
+::group::UPDATE PASS 2/3
+
+Prioritized Update Plan for this Pass (Highest Risk First):
+Rank  | Package                        | % of Total Risk    | Change
+----- | ------------------------------ | ------------------ | --------------------
+1     | numpy                          | 50.00             % | 1.26.4 -> 2.4.2
+2     | scipy                          | 25.00             % | 1.11.4 -> 1.17.0
+3     | scikit-learn                   | 25.00             % | 1.7.2 -> 1.8.0
+
+--------------------------------------------------------------------------------
+PULSE: [PASS 2 | ATTEMPT 1/3] Processing 'numpy'
+PULSE: Changed packages this pass so far: set()
+--------------------------------------------------------------------------------
+
+--> Toplevel Attempt: Trying direct update to numpy==2.4.2
+
+::group::Probe: Install & Validate for numpy==2.4.2
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+::endgroup::
+
+--> Toplevel Result: Direct update FAILED. Reason: 'Dependency installation failed: The root cause of the dependency conflict is that the specified versions of `scikit-learn==1.7.2`, `scipy==1.11.4`, `contourpy==1.3.3`, `matplotlib==3.10.8`, and `numpy==2.4.2` have mutually conflicting dependencies.'
+    Suspected Blockers (Regex): ['scikit-learn', 'scipy', 'contourpy', 'numpy', 'matplotlib']
+--> Action: Entering Level 1 Healing with 'Filter-Then-Scan' strategy.
+
+::group::Healing 'numpy': Filter-Then-Scan Strategy
+
+--- Phase 1: Filtering for compatible versions ---
+  -> Checking compatibility of numpy==2.4.2...
+     -- Incompatible. Diagnosis: The dependency conflict is caused by the inability to install contourpy==1.3.3, matplotlib==3.10.8, numpy==2.4.2, scikit-learn==1.7.2, and scipy==1.11.4 together because these specific package versions have conflicting dependencies.
+  -> Checking compatibility of numpy==2.4.1...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that the specified versions of contourpy==1.3.3, matplotlib==3.10.8, numpy==2.4.1, scikit-learn==1.7.2, and scipy==1.11.4 have conflicting dependencies with each other.
+  -> Checking compatibility of numpy==2.4.0...
+     -- Incompatible. Diagnosis: The root cause is that the specified versions—contourpy==1.3.3, matplotlib==3.10.8, numpy==2.4.0, scikit-learn==1.7.2, and scipy==1.11.4—have conflicting dependencies that prevent their simultaneous installation.
+  -> Checking compatibility of numpy==2.3.5...
+     -- Incompatible. Diagnosis: The dependency conflict is caused by the specified versions of contourpy==1.3.3, matplotlib==3.10.8, numpy==2.3.5, scikit-learn==1.7.2, and scipy==1.11.4 having mutually incompatible dependency requirements.
+  -> Checking compatibility of numpy==2.3.4...
+     -- Incompatible. Diagnosis: The dependency conflict arises because contourpy==1.3.3, matplotlib==3.10.8, numpy==2.3.4, scikit-learn==1.7.2, and scipy==1.11.4 have conflicting dependencies with each other, preventing their simultaneous installation.
+  -> Checking compatibility of numpy==2.3.3...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that `contourpy==1.3.3`, `matplotlib==3.10.8`, `numpy==2.3.3`, `scikit-learn==1.7.2`, and `scipy==1.11.4` cannot be installed together because these specific package versions have incompatible requirements with each other.
+  -> Checking compatibility of numpy==2.3.2...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that `contourpy==1.3.3`, `matplotlib==3.10.8`, `numpy==2.3.2`, `scikit-learn==1.7.2`, and `scipy==1.11.4` have conflicting dependencies among themselves.
+  -> Checking compatibility of numpy==2.3.1...
+     -- Incompatible. Diagnosis: The dependency conflict arises because contourpy==1.3.3, matplotlib==3.10.8, numpy==2.3.1, scikit-learn==1.7.2, and scipy==1.11.4 have conflicting internal dependencies among themselves, preventing their simultaneous installation.
+  -> Checking compatibility of numpy==2.3.0...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that the specified versions of `contourpy==1.3.3`, `matplotlib==3.10.8`, `numpy==2.3.0`, `scikit-learn==1.7.2`, and `scipy==1.11.4` have conflicting dependencies among themselves, preventing their simultaneous installation.
+  -> Checking compatibility of numpy==2.2.6...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that contourpy==1.3.3, matplotlib==3.10.8, numpy==2.2.6, scikit-learn==1.7.2, and scipy==1.11.4 have conflicting dependency requirements with each other, preventing their simultaneous installation.
+  -> Checking compatibility of numpy==2.2.5...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that contourpy==1.3.3, matplotlib==3.10.8, numpy==2.2.5, scikit-learn==1.7.2, and scipy==1.11.4 have conflicting dependencies among themselves, preventing their simultaneous installation.
+  -> Checking compatibility of numpy==2.2.4...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that the specified versions of contourpy==1.3.3, matplotlib==3.10.8, numpy==2.2.4, scikit-learn==1.7.2, and scipy==1.11.4 have incompatible dependency requirements among themselves.
+  -> Checking compatibility of numpy==2.2.3...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that the specified package versions of `contourpy==1.3.3`, `matplotlib==3.10.8`, `numpy==2.2.3`, `scikit-learn==1.7.2`, and `scipy==1.11.4` have conflicting dependencies.
+  -> Checking compatibility of numpy==2.2.2...
+     -- Incompatible. Diagnosis: The dependency conflict is caused by contourpy==1.3.3, matplotlib==3.10.8, numpy==2.2.2, scikit-learn==1.7.2, and scipy==1.11.4 having conflicting dependency requirements with each other.
+  -> Checking compatibility of numpy==2.2.1...
+     -- Incompatible. Diagnosis: The dependency conflict arises because the specified versions of contourpy==1.3.3, matplotlib==3.10.8, numpy==2.2.1, scikit-learn==1.7.2, and scipy==1.11.4 have incompatible internal dependencies with each other.
+  -> Checking compatibility of numpy==2.2.0...
+     -- Incompatible. Diagnosis: The dependency conflict is caused by mutually incompatible requirements among the specified versions of contourpy==1.3.3, matplotlib==3.10.8, numpy==2.2.0, scikit-learn==1.7.2, and scipy==1.11.4.
+  -> Checking compatibility of numpy==2.1.3...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that `contourpy==1.3.3`, `matplotlib==3.10.8`, `numpy==2.1.3`, `scikit-learn==1.7.2`, and `scipy==1.11.4` have conflicting dependencies that prevent their simultaneous installation.
+  -> Checking compatibility of numpy==2.1.2...
+     -- Incompatible. Diagnosis: The dependency conflict is caused by the inability to simultaneously satisfy the internal dependency requirements of `contourpy==1.3.3`, `matplotlib==3.10.8`, `numpy==2.1.2`, `scikit-learn==1.7.2`, and `scipy==1.11.4`.
+  -> Checking compatibility of numpy==2.1.1...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that `contourpy==1.3.3`, `matplotlib==3.10.8`, `numpy==2.1.1`, `scikit-learn==1.7.2`, and `scipy==1.11.4` have conflicting dependencies among themselves.
+  -> Checking compatibility of numpy==2.1.0...
+     -- Incompatible. Diagnosis: The specified versions of `contourpy==1.3.3`, `matplotlib==3.10.8`, `numpy==2.1.0`, `scikit-learn==1.7.2`, and `scipy==1.11.4` cannot be installed together because their individual dependency requirements conflict with each other.
+  -> Checking compatibility of numpy==2.0.2...
+     -- Incompatible. Diagnosis: The dependency conflict is caused by the specified versions of contourpy==1.3.3, matplotlib==3.10.8, numpy==2.0.2, scikit-learn==1.7.2, and scipy==1.11.4 having conflicting dependencies among themselves.
+  -> Checking compatibility of numpy==2.0.1...
+     -- Incompatible. Diagnosis: The dependency conflict arises because the specified versions of contourpy==1.3.3, matplotlib==3.10.8, numpy==2.0.1, scikit-learn==1.7.2, and scipy==1.11.4 have conflicting dependencies among themselves.
+  -> Checking compatibility of numpy==2.0.0...
+     -- Incompatible. Diagnosis: The root cause of the dependency conflict is that `contourpy==1.3.3`, `matplotlib==3.10.8`, `numpy==2.0.0`, `scikit-learn==1.7.2`, and `scipy==1.11.4` have conflicting dependencies among themselves.
+
+--- Phase 2: Validating compatible versions (newest first) ---
+Result: No compatible versions were found. Reverting to last known good version.
+::endgroup::
+
+--> Action: Level 1 Healing failed for 'numpy'. Escalating to Level 2 'Iterative Greedy Expansion'.
+
+    -> [Greedy Expansion Iteration 1/5]
+       Current Conflict Cluster: {'scikit-learn', 'matplotlib', 'contourpy', 'scipy'}
+       Updatable Candidates: ['scikit-learn', 'scipy']
+       Testing Greedy Plan: ['numpy==2.4.2', 'scikit-learn==1.8.0', 'scipy==1.17.0']
+
+::group::Co-Resolution Probe: Testing plan ['numpy==2.4.2', 'scikit-learn==1.8.0', 'scipy==1.17.0']
+--> Stage 1: Installing the proposed co-resolution dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_co_res_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -e git+https://github.com/Bhargavvvv2912/scikit-plot_AURA@1a70bfa9b27ef0497147eee153b01d53b4f6425a#egg=scikit_plot contourpy==1.3.3 cycler==0.12.1 fonttools==4.61.1 joblib==1.2.0 kiwisolver==1.4.9 matplotlib==3.10.8 packaging==26.0 pillow==12.1.0 pyparsing==3.3.2 python-dateutil==2.9.0.post0 six==1.17.0 threadpoolctl==3.6.0 numpy==2.4.2 scikit-learn==1.8.0 scipy==1.17.0' in CWD: '.'
+--> ERROR: Co-resolution installation failed.
+    Diagnosis: The dependency conflict arises because `joblib==1.2.0` and `scikit-learn==1.8.0` have incompatible requirements with each other.
+::endgroup::
+       Result: Failure revealed new blockers: {'joblib'}
+
+    -> [Greedy Expansion Iteration 2/5]
+       Current Conflict Cluster: {'scikit-learn', 'scipy', 'contourpy', 'matplotlib', 'joblib'}
+       Updatable Candidates: ['scikit-learn', 'scipy']
+       CRITICAL: Detected logical cycle! Aborting Greedy Strategy.
+
+       Greedy Heuristic exhausted.
+
+    -> [LLM Refinement Attempt 1/3] Requesting Expert Plan...
+    -> Executing Plan: ['numpy==2.0.0', 'scikit-learn==1.8.0', 'scipy==1.17.0']
+
+::group::Co-Resolution Probe: Testing plan ['numpy==2.0.0', 'scikit-learn==1.8.0', 'scipy==1.17.0']
+--> Stage 1: Installing the proposed co-resolution dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_co_res_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -e git+https://github.com/Bhargavvvv2912/scikit-plot_AURA@1a70bfa9b27ef0497147eee153b01d53b4f6425a#egg=scikit_plot contourpy==1.3.3 cycler==0.12.1 fonttools==4.61.1 joblib==1.2.0 kiwisolver==1.4.9 matplotlib==3.10.8 packaging==26.0 pillow==12.1.0 pyparsing==3.3.2 python-dateutil==2.9.0.post0 six==1.17.0 threadpoolctl==3.6.0 numpy==2.0.0 scikit-learn==1.8.0 scipy==1.17.0' in CWD: '.'
+--> ERROR: Co-resolution installation failed.
+    Diagnosis: The root cause of the dependency conflict is that `joblib==1.2.0` and `scikit-learn==1.8.0` have incompatible underlying dependencies that prevent them from being installed simultaneously.
+::endgroup::
+
+    -> [LLM Refinement Attempt 2/3] Requesting Expert Plan...
+    -> Executing Plan: ['numpy==1.26.5', 'scikit-learn==1.8.0', 'scipy==1.17.0']
+
+::group::Co-Resolution Probe: Testing plan ['numpy==1.26.5', 'scikit-learn==1.8.0', 'scipy==1.17.0']
+--> Stage 1: Installing the proposed co-resolution dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_co_res_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -e git+https://github.com/Bhargavvvv2912/scikit-plot_AURA@1a70bfa9b27ef0497147eee153b01d53b4f6425a#egg=scikit_plot contourpy==1.3.3 cycler==0.12.1 fonttools==4.61.1 joblib==1.2.0 kiwisolver==1.4.9 matplotlib==3.10.8 packaging==26.0 pillow==12.1.0 pyparsing==3.3.2 python-dateutil==2.9.0.post0 six==1.17.0 threadpoolctl==3.6.0 numpy==1.26.5 scikit-learn==1.8.0 scipy==1.17.0' in CWD: '.'
+--> ERROR: Co-resolution installation failed.
+    Diagnosis: The root cause of the dependency conflict is that the requested `numpy` version `1.26.5` is explicitly required but no matching distribution is found, as the available versions jump from `1.26.4` directly to `2.0.0` (and later versions) without `1.26.5`.
+::endgroup::
+
+    -> [LLM Refinement Attempt 3/3] Requesting Expert Plan...
+  -> LLM_WARNING: Filtered version scipy==1.11.4 (Not an upgrade from 1.11.4)
+    -> Executing Plan: ['numpy==1.26.5', 'scikit-learn==1.8.0']
+
+::group::Co-Resolution Probe: Testing plan ['numpy==1.26.5', 'scikit-learn==1.8.0']
+--> Stage 1: Installing the proposed co-resolution dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_co_res_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -e git+https://github.com/Bhargavvvv2912/scikit-plot_AURA@1a70bfa9b27ef0497147eee153b01d53b4f6425a#egg=scikit_plot contourpy==1.3.3 cycler==0.12.1 fonttools==4.61.1 joblib==1.2.0 kiwisolver==1.4.9 matplotlib==3.10.8 packaging==26.0 pillow==12.1.0 pyparsing==3.3.2 python-dateutil==2.9.0.post0 scipy==1.11.4 six==1.17.0 threadpoolctl==3.6.0 numpy==1.26.5 scikit-learn==1.8.0' in CWD: '.'
+--> ERROR: Co-resolution installation failed.
+    Diagnosis: The root cause of the dependency conflict is that the requested package `numpy==1.26.5` could not be found, as the available versions only include `numpy` up to `1.26.4` and then `2.0.0` and later.
+::endgroup::
+--> Healing Result: All attempts failed. Reverting.
+  -> Result for numpy: Reverted/Kept at 1.26.4 (No Change).
+
+--------------------------------------------------------------------------------
+PULSE: [PASS 2 | ATTEMPT 2/3] Processing 'scipy'
+PULSE: Changed packages this pass so far: set()
+--------------------------------------------------------------------------------
+
+--> Toplevel Attempt: Trying direct update to scipy==1.17.0
+
+::group::Probe: Install & Validate for scipy==1.17.0
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+--> Toplevel Result: Direct update FAILED. Reason: 'Validation script failed'
+    Suspected Blockers (Regex): ['--']
+--> Action: Entering Level 1 Healing with 'Filter-Then-Scan' strategy.
+
+::group::Healing 'scipy': Filter-Then-Scan Strategy
+
+--- Phase 1: Filtering for compatible versions ---
+  -> Checking compatibility of scipy==1.17.0...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.16.3...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.16.2...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.16.1...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.16.0...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.15.3...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.15.2...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.15.1...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.15.0...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.14.1...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.14.0...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.13.1...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.13.0...
+     -- Compatible.
+  -> Checking compatibility of scipy==1.12.0...
+     -- Compatible.
+
+--- Phase 2: Validating compatible versions (newest first) ---
+Found 14 compatible versions to test: ['1.17.0', '1.16.3', '1.16.2', '1.16.1', '1.16.0', '1.15.3', '1.15.2', '1.15.1', '1.15.0', '1.14.1', '1.14.0', '1.13.1', '1.13.0', '1.12.0']
+
+::group::Probe: Install & Validate for scipy==1.17.0
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.16.3
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.16.2
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.16.1
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.16.0
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.15.3
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.15.2
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.15.1
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.15.0
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.14.1
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.14.0
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.13.1
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.13.0
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+::group::Probe: Install & Validate for scipy==1.12.0
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+
+--> Probe Step 2: Installing project from current directory ('.')...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation .' in CWD: '.'
+
+--> Probe Step 3: Running validation suite...
+
+::group::Running Validation
+
+--- Running Smoke Test ---
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/validation_skplot.py' in CWD: '.'
+--- Smoke Test Full Output ---
+STDOUT:
+--> [X] Import Error: cannot import name 'interp' from 'scipy' (/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/lib/python3.11/site-packages/scipy/__init__.py)
+
+
+STDERR:
+
+--- End of Full Output ---
+::endgroup::
+::endgroup::
+
+Result: No compatible version passed validation. Reverting to last known good version.
+::endgroup::
+
+--> Action: Level 1 Healing failed for 'scipy'. Escalating to Level 2 'Iterative Greedy Expansion'.
+
+    -> [Greedy Expansion Iteration 1/5]
+       Current Conflict Cluster: {'--'}
+       Updatable Candidates: []
+       CRITICAL: Blockers identified, but they are already at max version.
+       Aborting to prevent regression. Co-Resolution impossible.
+  -> Result for scipy: Reverted/Kept at 1.11.4 (No Change).
+
+--------------------------------------------------------------------------------
+PULSE: [PASS 2 | ATTEMPT 3/3] Processing 'scikit-learn'
+PULSE: Changed packages this pass so far: set()
+--------------------------------------------------------------------------------
+
+--> Toplevel Attempt: Trying direct update to scikit-learn==1.8.0
+
+::group::Probe: Install & Validate for scikit-learn==1.8.0
+--> Probe Step 1: Installing the proposed dependency set...
+--> Running command: '/home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/bin/python -m pip install --no-build-isolation --no-cache-dir -r /home/runner/work/scikit-plot_AURA/scikit-plot_AURA/temp_venv/probe_requirements.txt' in CWD: '.'
+::endgroup::
+
+--> Toplevel Result: Direct update FAILED. Reason: 'Dependency installation failed: The dependency conflict is caused by the inability to simultaneously install `scikit-learn==1.8.0` and `joblib==1.2.0` because these specific package versions have conflicting dependencies.'
+    Suspected Blockers (Regex): ['scikit-learn', 'joblib']
+--> Action: Entering Level 1 Healing with 'Filter-Then-Scan' strategy.
+
+::group::Healing 'scikit-learn': Filter-Then-Scan Strategy
+
+--- Phase 1: Filtering for compatible versions ---
+  -> Checking compatibility of scikit-learn==1.8.0...
+     -- Incompatible. Diagnosis: The dependency conflict arises because installing `joblib==1.2.0` and `scikit-learn==1.8.0` simultaneously leads to incompatible requirements from their respective dependencies.
+
+--- Phase 2: Validating compatible versions (newest first) ---
+Result: No compatible versions were found. Reverting to last known good version.
+::endgroup::
+
+--> Action: Level 1 Healing failed for 'scikit-learn'. Escalating to Level 2 'Iterative Greedy Expansion'.
+
+    -> [Greedy Expansion Iteration 1/5]
+       Current Conflict Cluster: {'joblib'}
+       Updatable Candidates: []
+       CRITICAL: Blockers identified, but they are already at max version.
+       Aborting to prevent regression. Co-Resolution impossible.
+  -> Result for scikit-learn: Reverted/Kept at 1.7.2 (No Change).
+::endgroup::
+
+No effective version changes were possible in this pass. The system has converged.
+
+######################################################################
+### OVERALL UPDATE RUN SUMMARY ###
+
+[SUCCESS] The following packages were successfully updated:
+Package                        | Old Version          | New Version         
+------------------------------ | -------------------- | --------------------
+numpy                          | 1.24.3               | 1.26.4              
+scipy                          | 1.10.1               | 1.11.4              
+matplotlib                     | 3.7.1                | 3.10.8              
+scikit-learn                   | 1.2.2                | 1.7.2               
+contourpy                      | 1.3.2                | 1.3.3               
+######################################################################
+
+
+Run complete. The final requirements.txt is the latest provably working version.
