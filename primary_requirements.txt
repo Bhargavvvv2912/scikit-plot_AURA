@@ -1,6 +1,6 @@
-# This lets Pip grab the "future" versions that break the 2018 code
+numpy
 matplotlib
 scikit-learn>=1.8.0
 scipy
 joblib
-numpy
+wheel==0.42.0
