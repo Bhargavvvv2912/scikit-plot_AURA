@@ -1,0 +1,55 @@
+name: AURA Experiment - Scikit-Plot (Repo 32)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  modernize-skplot:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 🧪 1. Run Pip Baseline
+        run: |
+          python -m venv baseline_env
+          ./baseline_env/bin/pip install --upgrade pip
+          ./baseline_env/bin/pip install -r requirements.txt
+          ./baseline_env/bin/pip install -e .
+          ./baseline_env/bin/python validation_skplot.py
+
+      - name: 💥 2. Run Pip Upgrade
+        continue-on-error: true
+        run: |
+          python -m venv upgrade_env
+          ./upgrade_env/bin/pip install --upgrade pip
+          ./upgrade_env/bin/pip install -r primary_requirements.txt
+          ./upgrade_env/bin/pip install -e .
+          ./upgrade_env/bin/python validation_skplot.py
+
+      - name: 🤖 3. Run AURA Agent
+        run: |
+          python -m venv --system-site-packages aura_env
+          ./aura_env/bin/pip install google-genai google-api-core pypi-simple packaging pip-tools
+          ./aura_env/bin/python -u dependency_agent.py | tee aura_skplot_execution.log
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+      - name: 💾 Final Commit
+        if: always()
+        run: |
+          git config --global user.name 'AURA Agent'
+          git config --global user.email 'aura-agent@users.noreply.github.com'
+          git add requirements.txt aura_skplot_execution.log
+          if ! git diff --staged --quiet; then
+            git commit -m "🤖 [ASE-2026] REPO 32/32: Modernized Scikit-Plot [skip ci]"
+            git push
+          fi
